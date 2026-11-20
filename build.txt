@@ -1,0 +1,3 @@
+displayName = 更好的宠物
+author = NewbieModder
+version = 0.1

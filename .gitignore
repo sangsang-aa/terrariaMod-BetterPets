@@ -1,0 +1,17 @@
+# Build output
+bin/
+obj/
+
+# WorkBuddy local data
+.workbuddy/
+
+# tModLoader build artifacts
+*.tmod
+BuildIgnore.txt
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.user
+.vs/
+.vscode/

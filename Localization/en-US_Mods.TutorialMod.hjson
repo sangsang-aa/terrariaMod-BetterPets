@@ -1,0 +1,59 @@
+# This file will automatically update with entries for new content after a build and reload.
+# Please read https://github.com/tModLoader/tModLoader/wiki/Localization to learn more about localization and these files.
+
+Items: {
+	TutorialSword: {
+		DisplayName: My Tutorial Sword
+		Tooltip: My First Sword
+	}
+
+	ExamplePetItem: {
+		DisplayName: Example Pet
+		Tooltip: Summons an example pet to follow you
+	}
+}
+
+Projectiles: {
+	ExamplePetProjectile.DisplayName: Example Pet
+	BabyEaterMinion.DisplayName: Baby Eater Minion
+	CorruptEaterShot.DisplayName: Corrupt Eater Shot
+	ThrownFish.DisplayName: Thrown Fish
+	PenguinFishSwing.DisplayName: Penguin Fish Swing
+	NectarHive.DisplayName: Nectar Hive
+}
+
+Buffs: {
+	ExamplePetBuff: {
+		DisplayName: Example Pet
+		Description: An example pet follows you
+	}
+}
+
+ZephyrFishGlobalItem.Tooltip:
+	'''
+	Summons a pet Zephyr Fish
+	It charges at nearby enemies to attack
+	'''
+ZephyrFishGlobalBuff.Description: It charges at nearby enemies
+BabyEaterGlobalItem.Tooltip:
+	'''
+	Summons a pet Baby Eater
+	It fires corrupt shots
+	Below 30% life it releases baby eaters that charge at enemies
+	'''
+BabyEaterGlobalBuff.Description: It fires corrupt shots and releases baby eaters when you are badly hurt
+BabyPenguinGlobalItem.Tooltip:
+	'''
+	Summons a pet Baby Penguin
+	It swings a fish for melee attacks
+	It throws the fish for ranged attacks
+	'''
+BabyPenguinGlobalBuff.Description: It swings a fish in melee and throws it at range
+
+BabyEaterGlobalProjectile: {
+	Enraged: The Baby Eater is now enraged!
+	Calmed: The Baby Eater has calmed down.
+}
+
+NectarGlobalItem.Tooltip: Mods.TutorialMod.NectarGlobalItem.Tooltip
+NectarGlobalBuff.Description: Mods.TutorialMod.NectarGlobalBuff.Description

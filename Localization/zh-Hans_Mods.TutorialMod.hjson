@@ -1,0 +1,59 @@
+# This file will automatically update with entries for new content after a build and reload.
+# Please read https://github.com/tModLoader/tModLoader/wiki/Localization to learn more about localization and these files.
+
+Items: {
+	TutorialSword: {
+		DisplayName: 我的教程剑
+		Tooltip: 我的第一把剑
+	}
+
+	ExamplePetItem: {
+		DisplayName: 示例宠物
+		Tooltip: 召唤一只示例宠物跟随你
+	}
+}
+
+Projectiles: {
+	ExamplePetProjectile.DisplayName: 示例宠物
+	// BabyEaterMinion.DisplayName: Baby Eater Minion
+	// CorruptEaterShot.DisplayName: Corrupt Eater Shot
+	// ThrownFish.DisplayName: Thrown Fish
+	// PenguinFishSwing.DisplayName: Penguin Fish Swing
+	// NectarHive.DisplayName: Nectar Hive
+}
+
+Buffs: {
+	ExamplePetBuff: {
+		DisplayName: 示例宠物
+		Description: 一只示例宠物跟随在你身后
+	}
+}
+
+ZephyrFishGlobalItem.Tooltip:
+	'''
+	召唤宠物和风鱼
+	它会冲撞攻击附近的敌人
+	'''
+ZephyrFishGlobalBuff.Description: 它会冲撞附近的敌人
+BabyEaterGlobalItem.Tooltip:
+	'''
+	召唤宠物婴儿吞噬怪
+	它会发射腐化弹幕
+	血量低于 30% 时会放出小吞噬怪冲撞敌人
+	'''
+BabyEaterGlobalBuff.Description: 它会发射腐化弹幕，并在你重伤时放出小吞噬怪
+BabyPenguinGlobalItem.Tooltip:
+	'''
+	召唤宠物企鹅宝宝
+	近战会挥舞鱼攻击
+	远程会把鱼丢出去
+	'''
+BabyPenguinGlobalBuff.Description: 它会挥舞鱼近战，也会把鱼丢出去
+
+BabyEaterGlobalProjectile: {
+	Enraged: 宝宝吞噬者现在很愤怒
+	Calmed: 宝宝吞噬者平静下来了
+}
+
+NectarGlobalItem.Tooltip: 召唤丛林武装直升机
+NectarGlobalBuff.Description: 它会在附近的敌人之间传递“花蜜”
