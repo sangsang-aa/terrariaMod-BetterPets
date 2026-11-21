@@ -39,6 +39,10 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 		public const int RangedLifetime = 12;   // 远程前摇完整帧数（只播一半就丢出）
 		public const float OrbitRadius = 30f;   // 鱼围绕企鹅的半径（像素）
 
+		// 局部命中冷却 > 最长挥砍帧数：保证同一弹幕对同一目标在整个生命周期内
+		// 只结算一次命中，避免一次挥砍因 localNPCHitCooldown 过短而重复判定。
+		private const int HitCooldown = MeleeLifetime + 4;
+
 		private const float SwingStart = -1.2f; // 起始角（弧度）
 		private const float SwingEnd = 1.2f;    // 结束角
 
@@ -64,7 +68,7 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = MeleeLifetime;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = HitCooldown; // 一砍只中一次（冷却覆盖整个挥砍时长）
 		}
 
 		// AI：每帧围绕企鹅做圆弧运动并旋转贴图，形成“挥舞鱼”的轨迹。
