@@ -57,3 +57,5 @@ BabyEaterGlobalProjectile: {
 
 NectarGlobalItem.Tooltip: Mods.TutorialMod.NectarGlobalItem.Tooltip
 NectarGlobalBuff.Description: Mods.TutorialMod.NectarGlobalBuff.Description
+SeaTurtleGlobalItem.Tooltip: Mods.TutorialMod.SeaTurtleGlobalItem.Tooltip
+SeaTurtleGlobalBuff.Description: Mods.TutorialMod.SeaTurtleGlobalBuff.Description

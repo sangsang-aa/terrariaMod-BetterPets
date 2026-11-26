@@ -102,7 +102,8 @@ namespace TutorialMod.Common.Systems
 				if (projectile.type == ProjectileID.ZephyrFish
 					|| projectile.type == ProjectileID.BabyEater
 					|| projectile.type == ProjectileID.Penguin
-					|| projectile.type == ProjectileID.BabyHornet) {
+					|| projectile.type == ProjectileID.BabyHornet
+					|| projectile.type == ProjectileID.Turtle) {
 					return true;
 				}
 			}

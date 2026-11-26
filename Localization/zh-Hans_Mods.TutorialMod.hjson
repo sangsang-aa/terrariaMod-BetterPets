@@ -57,3 +57,9 @@ BabyEaterGlobalProjectile: {
 
 NectarGlobalItem.Tooltip: 召唤丛林武装直升机
 NectarGlobalBuff.Description: 它会在附近的敌人之间传递“花蜜”
+SeaTurtleGlobalItem.Tooltip:
+	'''
+	召唤宠物海龟
+	它会把自己发射出去
+	'''
+SeaTurtleGlobalBuff.Description: 它会把自己发射出去。？核弹？
