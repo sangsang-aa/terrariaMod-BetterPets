@@ -45,7 +45,7 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 		private const float ThrowGravity = 0.3f;   // 抛物线重力（像素/帧²）
 		private const int ThrowFlightTime = 35;    // 预计飞行帧数，用于反推初速度
 
-		private const int MeleeSwingTime = PenguinFishSwing.MeleeLifetime;     // 近战挥砍 16 帧
+		private const int MeleeSwingTime = PenguinFishSwing.MeleeTotalLifetime;   // 近战挥砍 28 帧（蓄力 12 + 挥砍 16）
 		private const int RangedSwingTime = PenguinFishSwing.RangedLifetime;   // 远程挥鱼动画 12 帧
 		private const int RangedThrowFrame = RangedSwingTime / 2;             // 前摇 6 帧（鱼正对目标时丢出）
 		private const int RangedRecoverTime = 24;                             // 投掷冷却 24 帧
@@ -163,7 +163,7 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 			ctx.RangedBaseAngle = (ctx.Target.Center - ctx.Pet.Center).ToRotation();
 
 			if (Main.myPlayer == ctx.Pet.owner) {
-				ctx.RangedSwingIndex = SpawnSwing(ctx, RangedSwingTime);
+				ctx.RangedSwingIndex = SpawnSwing(ctx, RangedSwingTime, 0); // 远程前摇不带蓄力
 			}
 		}
 
@@ -193,7 +193,7 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 			ctx.HoldPosition = ctx.Pet.position;
 
 			if (Main.myPlayer == ctx.Pet.owner) {
-				ctx.MeleeSwingIndex = SpawnSwing(ctx, MeleeSwingTime);
+				ctx.MeleeSwingIndex = SpawnSwing(ctx, MeleeSwingTime, PenguinFishSwing.MeleeWindup); // 近战带 12 帧蓄力放大
 			}
 		}
 
@@ -264,20 +264,23 @@ namespace TutorialMod.Content.Pets.BabyPenguin
 			pet.velocity = (pet.velocity * (inertia - 1f) + direction) / inertia;
 		}
 
-		// 生成挥鱼弹幕：近战挥砍(16 帧)与远程前摇(12 帧)共用。
-		private static int SpawnSwing(PenguinContext ctx, int duration) {
+		// 生成挥鱼弹幕：近战挥砍(28 帧，含蓄力)与远程前摇(12 帧)共用。
+		// windup 仅作为调用方的语义标注；当前 tModLoader 版本的 Projectile.ai 只有 3 个槽位，
+		// 写 ai[3] 会抛 IndexOutOfRangeException。蓄力帧数改由 PenguinFishSwing 按 duration 反推。
+		private static int SpawnSwing(PenguinContext ctx, int duration, int windup) {
 			Projectile pet = ctx.Pet;
 			int damage = (int)ctx.Owner.GetTotalDamage(DamageClass.Summon).ApplyTo(MeleeDamage);
 			float knockback = ctx.Owner.GetKnockback(DamageClass.Summon).ApplyTo(MeleeKnockback);
 			float baseAngle = (ctx.Target.Center - pet.Center).ToRotation();
 
+			// Vector2 重载最多支持 ai0~ai2：ai[0]=企鹅索引, ai[1]=基准角, ai[2]=动画总帧数。
 			int index = Projectile.NewProjectile(pet.GetSource_FromAI(), pet.Center, Vector2.Zero,
 				ModContent.ProjectileType<PenguinFishSwing>(), damage, knockback, pet.owner,
 				pet.whoAmI, baseAngle, duration);
 
 			if (index >= 0 && index < Main.maxProjectiles) {
 				Main.projectile[index].timeLeft = duration;
-				Main.projectile[index].ai[2] = duration; // 动画用 ai[2] 归一化进度
+				Main.projectile[index].ai[2] = duration; // 动画总帧数（蓄力帧数由此反推）
 				Main.projectile[index].netUpdate = true;
 			}
 

@@ -13,6 +13,8 @@
 | [03-segmented-test.md](03-segmented-test.md) | Bug 3 · 分段测试定位真正病根 | 定位完成，引出三层重构 |
 | [04-combat-vacuum.md](04-combat-vacuum.md) | Bug 4 · 5 秒切换的战斗真空期边界推演 | 加追击超时阀解决 |
 | [05-melee-duplicate-hits.md](05-melee-duplicate-hits.md) | Bug 5 · 一次近战多次判定 + 重复动画 | 已修复（编译通过，待实测） |
+| [06-pet-teleport-on-attack.md](06-pet-teleport-on-attack.md) | Bug 6 · 进入攻击后企鹅被"传送"回玩家身边 | 已修复（真因 `ai[3]` 越界，编译通过待实测） |
+| [07-ranged-swing-oversized.md](07-ranged-swing-oversized.md) | Bug 7 · 远程挥舞显示为放大过后的鱼 | 已修复（编译通过，待实测） |
 | [env-tml003.md](env-tml003.md) | 环境问题 · TML003 打包失败 | 非代码问题，关游戏再 build |
 | [env-github-token-403.md](env-github-token-403.md) | 环境限制 · GitHub App token 403 | 改用 PAT + REST API |
 

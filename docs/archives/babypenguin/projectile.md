@@ -51,7 +51,7 @@ Ranged ──[ModeTimeUp: 5秒]──> Melee
 | Ranged | `RangedWindup` | 维持站位，6 帧前摇 | 到点：主机生成投掷物 → `RangedRecover` |
 | Ranged | `RangedRecover` | 维持站位，24 帧冷却 | 到点 → `RangedApproach` |
 | Melee | `MeleeApproach` | `ChaseTimer++`，每帧重算贴边接触点并追击 | 贴边（`AtContact`）→ `MeleeSwing`；超时门在调度器层拦截 |
-| Melee | `MeleeSwing` | 钉在接触点、速度清零，**固定挥满 16 帧（忽略目标移动）** | 挥满 → Kill 挥砍弹幕 → `MeleeApproach` |
+| Melee | `MeleeSwing` | 钉在接触点、速度清零，**固定挥满 28 帧（蓄力 12 + 挥砍 16，忽略目标移动）** | 挥满 → Kill 挥砍弹幕 → `MeleeApproach` |
 
 挥砍期间忽略目标移动的理由：命中造成的击退会让目标位移，若据此提前转出，会与再次贴边生成的新弹幕叠加成自激循环（详见 [log/05](../../log/05-melee-duplicate-hits.md)）。
 
@@ -84,7 +84,8 @@ Ranged ──[ModeTimeUp: 5秒]──> Melee
 | `ChaseSpeed` / `ChaseInertia` | 15f / 15f |
 | 近战伤害 / 击退 | 20 / 4 |
 | 远程伤害 / 击退 | 15 / 3 |
-| 挥砍时长（近战 / 远程前摇） | 16 帧 / 12 帧（前摇播 6 帧即丢鱼） |
+| 挥砍时长（近战 / 远程前摇） | 28 帧（蓄力 12 + 挥砍 16）/ 12 帧（前摇播 6 帧即丢鱼） |
+| 蓄力放大倍数 | 2 倍（`WindupScale`，仅绘制、不改碰撞框） |
 | 投掷冷却 | 24 帧 |
 | 抛物线重力 / 预计飞行帧 | 0.3 / 35 帧 |
 | 伤害类别 | 召唤（`DamageClass.Summon`），经 `GetTotalDamage` / `GetKnockback` 计算 |
