@@ -60,8 +60,8 @@ namespace TutorialMod.Content.Pets.ZephyrFish
 		// 当与目标距离小于该值时，从“接近”切换到“蓄力准备冲刺”（单位：像素）
 		private const float DashRange = 280f;
 		// 接近阶段的速度（像素/帧）与惯性（越大转向越平滑、越小越跟手）
-		private const float ApproachSpeed = 8f;
-		private const float ApproachInertia = 12f;
+		private const float ApproachSpeed = 12f;
+		private const float ApproachInertia = 4f;
 		// 冲刺爆发速度（像素/帧）
 		private const float DashSpeed = 17f;
 		// 各阶段持续帧数（游戏每秒 60 帧，所以 60 帧 = 1 秒）
@@ -156,7 +156,8 @@ namespace TutorialMod.Content.Pets.ZephyrFish
 				case RamState.Approach:
 					// 先普通速度贴近，进入冲刺距离后再蓄力
 					projectile.friendly = false;
-					SteerTo(projectile, targetCenter, ApproachSpeed, ApproachInertia);
+					FaceTarget(projectile, targetCenter);
+                    SteerTo(projectile, targetCenter, ApproachSpeed, ApproachInertia);
 					if (distanceFromTarget < DashRange) {
 						EnterState(projectile, RamState.Windup, WindupTime);
 					}
@@ -184,14 +185,19 @@ namespace TutorialMod.Content.Pets.ZephyrFish
 					}
 					break;
 
-				case RamState.Recover:
-					// 回气：不干预速度，交给原版 AI 游动，冷却结束后再次接近
-					projectile.friendly = false;
-					if (--stateTimer <= 0) {
-						EnterState(projectile, RamState.Approach, 0);
-					}
-					break;
-			}
+                case RamState.Recover:
+                    // 回气：冷却结束后再次接近
+                    projectile.friendly = false;
+                    FaceTarget(projectile, targetCenter);
+                    projectile.velocity *= 0.9f;
+                    if (projectile.velocity.LengthSquared() < 0.25f)   // 小于 0.5 px/帧
+                        projectile.velocity = Vector2.Zero;
+                    if (--stateTimer <= 0)
+                    {
+                        EnterState(projectile, RamState.Windup, 0);
+                    }
+                    break;
+            }
 		}
 
 		// OnHitNPC：该弹幕命中敌人时调用（NPC.HitInfo 里带着本次命中的伤害、暴击、
