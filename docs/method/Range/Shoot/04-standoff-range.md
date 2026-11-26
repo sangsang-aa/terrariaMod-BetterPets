@@ -14,6 +14,8 @@
 
 没有站位概念的单位会一路挤到目标中心，既失去远程的意义，又和「贴边才能切近战」之类的判定打架（见 [log/03](../log/03-segmented-test.md)）。区间值要考虑攻击射程与前摇期间目标位移。
 
+区间内减速悬停即可；曾怀疑"静止会被原版 AI 判定卡死而传送回玩家"，实测推翻，真因是 `ai[3]` 数组越界（见 [log/06](../log/06-pet-teleport-on-attack.md)）。
+
 本项目取值：8~10 格（128~160px），见 [archives/babypenguin/projectile.md](../archives/babypenguin/projectile.md) 参数表。
 
 ## 出处
