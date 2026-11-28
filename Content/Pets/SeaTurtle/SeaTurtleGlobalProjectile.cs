@@ -13,8 +13,8 @@ namespace TutorialMod.Content.Pets.SeaTurtle
     // SeaTurtleGlobalProjectile —— 给原版“海龟”宠物附加冲撞攻击
     // ============================================================================
     // 【这是什么】
-    //   原版宠物“海龟”由物品 ItemID.SeaTurtle 召唤，玩家身上挂 BuffID.SeaTurtle，
-    //   宠物本体是一个 ProjectileID.SeaTurtle 弹幕。本类不改原版内容，而是“外挂”一套
+    //   原版宠物“海龟”由物品 ItemID.Seaweed（海草）召唤，玩家身上挂 BuffID.PetTurtle，
+    //   宠物本体是一个 ProjectileID.Turtle 弹幕。本类不改原版内容，而是“外挂”一套
     //   冲撞攻击行为到这只宠物上。
     //
     // 【为什么用 GlobalProjectile，而不是新建 ModProjectile】
@@ -30,15 +30,15 @@ namespace TutorialMod.Content.Pets.SeaTurtle
     // 【机制：一个写在 PostAI 里的四段状态机】
     //   原版游动 AI 照常运行（我们不拦截 PreAI，它默认返回 true），在它跑完之后用 PostAI
     //   覆盖速度，实现：
-    //     Approach（接近） -> Windup（蓄力） -> Dash（冲刺） -> Recover（回气） -> Approach ...
+    //     Windup（缩壳） -> Charge（旋转蓄力）-> Dash（冲刺） -> Recover（回气） -> Windup ...
     //   只有 Dash 阶段才把弹幕的 friendly 置为 true 去造成接触伤害；
     //   再配合 MinionContactDamage 返回 true，宠物才真正能“撞伤”敌人。
     //   命中目标后沿反方向弹开并转入 Recover，于是会反复发起冲刺。
     //
     // 【涉及的原版 ID】（可在 WIKI 的 Vanilla Content IDs 查询）
-    //   ItemID.ZephyrFish        召唤物品“和风鱼”
-    //   BuffID.ZephyrFish        宠物增益
-    //   ProjectileID.ZephyrFish  宠物本体弹幕
+    //   ItemID.Seaweed        召唤物品“海草”
+    //   BuffID.PetTurtle        宠物增益
+    //   ProjectileID.Turtle  宠物本体弹幕
     //   https://github.com/tModLoader/tModLoader/wiki/Vanilla-Content-IDs
     // ============================================================================
     public class SeaTurtleGlobalProjectile : GlobalProjectile
@@ -78,6 +78,7 @@ namespace TutorialMod.Content.Pets.SeaTurtle
         private float currentGravity;
         private float dx, dy, g;
         private int T;
+        private float savedVx, savedVy;
 
         // AppliesToEntity：在弹幕初始化时调用，决定这份 Global 是否作用于该弹幕。
         // 这里只认原版海龟弹幕，避免把这套冲刺逻辑套给所有宠物/所有弹幕。
@@ -359,18 +360,24 @@ namespace TutorialMod.Content.Pets.SeaTurtle
 
                 if (targetOnGround && turtleOnGround && samePlane)
                 {
-                    projectile.velocity = new Vector2(GetDirection(projectile, targetCenter).X * GroundDashSpeed, 0f);
+                    savedVx = GetDirection(projectile, targetCenter).X * GroundDashSpeed;
+                    savedVy = 0f;
+                    projectile.velocity = new Vector2(savedVx, savedVy);
                     currentGravity = 0f;
                 }
-                else
+                /*else
                 {
-                    projectile.velocity = new Vector2(dx / T, dy / T - g * T / 2f);
+                    savedVx = dx / T;
+                    savedVy = dy / T - g * T / 2f;
+                    projectile.velocity = new Vector2(savedVx, savedVy);
                     currentGravity = g;
-                }
+                }*/
             }
             else   // 后续帧：只让重力生效，别再重算
             {
-                projectile.velocity.Y += currentGravity;
+                projectile.velocity.Y = savedVy+currentGravity;
+                projectile.velocity.X = savedVx;
+                projectile.rotation = 0f;
             }
         }
 

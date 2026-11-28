@@ -39,6 +39,11 @@ archives/
 │   ├── buff.md            ExamplePetBuff：宠物增益
 │   ├── projectile.md      ExamplePetProjectile：宠物本体
 │   └── stardust-dragon.md 配套全局系统：星尘龙寿命管理
+├── seaturtle/             海龟（改写原版·三态冲撞；设计稿见对象夹内 HTML）
+│   ├── README.md          对象总览
+│   ├── summon-item.md     召唤物品「海草」(ItemID.Seaweed)
+│   ├── buff.md            宠物增益 (BuffID.PetTurtle)
+│   └── projectile.md      宠物本体：三态冲撞状态机 + 网络同步
 └── pettargetmarker/       目标标记系统（跨宠物全局系统）
     └── README.md          右键标记时的金色脉冲尘 + 识别的四种宠物
 ```
@@ -52,6 +57,7 @@ archives/
 | 和风鱼 | 改写原版 | [zephyrfish/](zephyrfish/README.md) | 接近→蓄力→冲刺→回气四段冲撞；含 3 个部件档案 |
 | 花蜜蜜蜂 | 改写原版 | [nectar/](nectar/README.md) | 毒刺 + 每 20 发掷蜂巢炸出小蜜蜂；含 4 个部件档案 |
 | 示例宠物 | 新建内容 | [examplepet/](examplepet/README.md) | 近战接触伤害 / 远程召唤限时星尘龙；含 4 个部件档案 |
+| 海龟 | 改写原版 | [seaturtle/](seaturtle/README.md) | 三态冲撞（蓄力 / 冲刺 / 回气），地面平射设计；含 3 个部件档案 |
 | 目标标记系统 | 全局系统 | [pettargetmarker/](pettargetmarker/README.md) | 四只改写宠物的右键标记尘反馈 |
 
 > 归档约定：新增对象时，在 `archives/` 下建一个以对象命名的文件夹，把该对象相关的全部档案（含配套系统）放进去；跨对象关联用相对链接互指。
